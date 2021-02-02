@@ -2,3 +2,5 @@
 target/
 
 *.gpx
+
+.idea/workspace.xml
