@@ -12,11 +12,8 @@
 /*    */   public double getLatitude() {
 /* 13 */     return this.latitude;
 /*    */   }
-/*    */   
-/*    */   public void setLatitude(double latitude) {
-/* 17 */     this.latitude = latitude;
-/*    */   }
-/*    */   
+
+    /*    */
 /*    */   public double getLongitude() {
 /* 21 */     return this.longitude;
 /*    */   }

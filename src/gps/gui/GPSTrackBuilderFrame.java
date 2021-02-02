@@ -1,36 +1,22 @@
 /*     */ package gps.gui;
 /*     */ 
-/*     */ import gps.track.GPSTrack;
-/*     */ import gps.track.GPSTrackPoint;
-/*     */ import java.awt.Dimension;
-/*     */ import java.awt.EventQueue;
-/*     */ import java.awt.GridBagConstraints;
-/*     */ import java.awt.GridBagLayout;
-/*     */ import java.awt.Image;
-/*     */ import java.awt.event.ActionEvent;
-/*     */ import java.awt.event.ActionListener;
-/*     */ import java.io.File;
-/*     */ import java.io.IOException;
-/*     */ import java.util.Calendar;
-/*     */ import java.util.Date;
-/*     */ import java.util.List;
-/*     */ import javax.imageio.ImageIO;
-/*     */ import javax.swing.Box;
-/*     */ import javax.swing.BoxLayout;
-/*     */ import javax.swing.ImageIcon;
-/*     */ import javax.swing.JButton;
-/*     */ import javax.swing.JFileChooser;
-/*     */ import javax.swing.JFrame;
-/*     */ import javax.swing.JLabel;
-/*     */ import javax.swing.JOptionPane;
-/*     */ import javax.swing.JPanel;
-/*     */ import javax.swing.JSpinner;
-/*     */ import javax.swing.JTextField;
-/*     */ import javax.swing.SpinnerDateModel;
-/*     */ import javax.swing.SpinnerNumberModel;
-/*     */ import javax.swing.UIManager;
-/*     */ import javax.swing.border.TitledBorder;
-/*     */ import javax.swing.filechooser.FileNameExtensionFilter;
+/*     */
+
+import gps.track.GPSTrack;
+import gps.track.GPSTrackPoint;
+
+import javax.imageio.ImageIO;
+import javax.swing.*;
+import javax.swing.border.TitledBorder;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.io.File;
+import java.io.IOException;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 /*     */ 
 /*     */ 
 /*     */ 
@@ -42,15 +28,10 @@
 /*     */   extends JFrame
 /*     */ {
 /*     */   private static final long serialVersionUID = 2698799947780583769L;
-/*  45 */   private final String MSG_SRC_FILE_NOT_EXISTS = "Неверное имя исходного файла: \n     файл <%s> не существует\n";
-/*     */   
-/*  47 */   private final String MSG_OUT_PATH_NOT_CORRECT = "Неверный путь к выходному файлу %s: \n     указана несуществующая папка или некорректное имя файла\n";
-/*     */   
-/*  49 */   private final String REV1_DEVIATION = "0.0005";
-/*  50 */   private final String REV2_DEVIATION = "0.00005";
-/*     */   
-/*     */   public static final String DATE_TIME_FORMAT = "dd MMMM yyyy   HH:mm:ss";
-/*     */   
+    /*  45 */
+    /*     */
+    /*  47 */
+    /*     */
 /*     */   private JTextField txtSrcFileName;
 /*     */   
 /*     */   private JButton btnChooseSrcFile;
@@ -74,13 +55,14 @@
 /*     */   private JSpinner spinRev2DateFrom;
 /*     */   private JSpinner spinRev2DateTo;
 /*     */   private JTextField txtMaxRev2Deviation;
-/*     */   private JButton btnGenerateAll;
+/*     */   @SuppressWarnings("FieldCanBeLocal")
+private JButton btnGenerateAll;
 /*     */   
 /*     */   public GPSTrackBuilderFrame() {
-/*  80 */     setDefaultCloseOperation(3);
+/*  80 */     setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
 /*  81 */     setSize(700, 700);
 /*  82 */     setTitle("Преобразователь GPS-трека");
-/*  83 */     setLayout(new BoxLayout(getContentPane(), 1));
+/*  83 */     setLayout(new BoxLayout(getContentPane(), BoxLayout.Y_AXIS));
 /*     */     
 /*  85 */     selectLookAndFeel();
 /*     */     
@@ -98,7 +80,7 @@
 /*  98 */     GridBagConstraints gbc = new GridBagConstraints();
 /*  99 */     pnlSourceData.setBorder(new TitledBorder("Исходные данные"));
 /*     */     
-/* 101 */     this.txtSrcFileName = new JTextField(String.valueOf(getCurrentDir()) + "86.1.gpx");
+/* 101 */     this.txtSrcFileName = new JTextField(getCurrentDir() + "86.1.gpx");
 /* 102 */     this.btnChooseSrcFile = new JButton();
 /* 103 */     this.txtTrackName = new JTextField("Трек");
 /* 104 */     this.txtDesc = new JTextField("Описание");
@@ -140,7 +122,7 @@
 /* 140 */     pnlRev1Data.setBorder(new TitledBorder("Данные затирки"));
 /*     */ 
 /*     */     
-/* 143 */     this.txtRev1FileName = new JTextField(String.valueOf(System.getProperty("user.dir")) + File.separator + "rev1.gpx");
+/* 143 */     this.txtRev1FileName = new JTextField(System.getProperty("user.dir") + File.separator + "rev1.gpx");
 /* 144 */     this.btnChooseRev1File = new JButton();
 /*     */     
 /* 146 */     this.spinRev1DateFrom = new JSpinner(new SpinnerDateModel());
@@ -149,7 +131,7 @@
 /*     */     
 /* 150 */     this.spinRev1DateTo = new JSpinner(new SpinnerDateModel());
 /* 151 */     this.spinRev1DateTo.setEditor(new JSpinner.DateEditor(this.spinRev1DateTo, "dd MMMM yyyy   HH:mm:ss"));
-/* 152 */     cal.add(10, 3);
+/* 152 */     cal.add(Calendar.HOUR, 3);
 /* 153 */     this.spinRev1DateTo.setValue(cal.getTime());
 /*     */     
 /* 155 */     this.txtMaxRev1Deviation = new JTextField("0.0005");
@@ -184,18 +166,18 @@
 /* 184 */     pnlRev2Data.setBorder(new TitledBorder("Данные учета"));
 /*     */ 
 /*     */     
-/* 187 */     this.txtRev2FileName = new JTextField(String.valueOf(System.getProperty("user.dir")) + File.separator + "rev2.gpx");
+/* 187 */     this.txtRev2FileName = new JTextField(System.getProperty("user.dir") + File.separator + "rev2.gpx");
 /* 188 */     this.btnChooseRev2File = new JButton();
 /*     */     
 /* 190 */     this.spinRev2DateFrom = new JSpinner(new SpinnerDateModel());
 /* 191 */     this.spinRev2DateFrom.setEditor(new JSpinner.DateEditor(this.spinRev2DateFrom, "dd MMMM yyyy   HH:mm:ss"));
-/* 192 */     cal.add(5, 1);
-/* 193 */     cal.add(10, 3);
+/* 192 */     cal.add(Calendar.DATE, 1);
+/* 193 */     cal.add(Calendar.HOUR, 3);
 /* 194 */     this.spinRev2DateFrom.setValue(cal.getTime());
 /*     */     
 /* 196 */     this.spinRev2DateTo = new JSpinner(new SpinnerDateModel());
 /* 197 */     this.spinRev2DateTo.setEditor(new JSpinner.DateEditor(this.spinRev2DateTo, "dd MMMM yyyy   HH:mm:ss"));
-/* 198 */     cal.add(10, 3);
+/* 198 */     cal.add(Calendar.HOUR, 3);
 /* 199 */     this.spinRev2DateTo.setValue(cal.getTime());
 /*     */     
 /* 201 */     this.txtMaxRev2Deviation = new JTextField("0.00005");
@@ -245,22 +227,18 @@
 /*     */ 
 /*     */   
 /*     */   public static void main(String[] args) {
-/* 248 */     EventQueue.invokeLater(new Runnable()
-/*     */         {
-/*     */           
-/*     */           public void run()
-/*     */           {
-/* 253 */             GPSTrackBuilderFrame frame = new GPSTrackBuilderFrame();
-/* 254 */             frame.setVisible(true);
-/*     */           }
-/*     */         });
+/* 248 */     /*     *//*     *//*     *//*     *//*     */
+    EventQueue.invokeLater(() -> {
+    /* 253 */             GPSTrackBuilderFrame frame = new GPSTrackBuilderFrame();
+    /* 254 */             frame.setVisible(true);
+    /*     */           });
 /*     */   }
 /*     */ 
 /*     */ 
 /*     */ 
 /*     */   
 /*     */   private String getCurrentDir() {
-/* 263 */     return String.valueOf(System.getProperty("user.dir")) + File.separator;
+/* 263 */     return System.getProperty("user.dir") + File.separator;
 /*     */   }
 /*     */ 
 /*     */ 
@@ -361,21 +339,21 @@
 /* 361 */     if (!checkSourceFileExists(this.txtSrcFileName.getText())) {
 /*     */       
 /* 363 */       result = false;
-/* 364 */       errMsg = String.valueOf(errMsg) + String.format("Неверное имя исходного файла: \n     файл <%s> не существует\n", new Object[] { this.txtSrcFileName.getText() });
+/* 364 */       errMsg = errMsg + String.format("Неверное имя исходного файла: \n     файл <%s> не существует\n", this.txtSrcFileName.getText());
 /*     */     } 
-/* 366 */     if (!checkOutPathCorrect(this.txtRev1FileName.getText())) {
+/* 366 */     if (checkOutPathIncorrect(this.txtRev1FileName.getText())) {
 /*     */       
 /* 368 */       result = false;
-/* 369 */       errMsg = String.valueOf(errMsg) + String.format("Неверный путь к выходному файлу %s: \n     указана несуществующая папка или некорректное имя файла\n", new Object[] { "затирки" });
+/* 369 */       errMsg = errMsg + String.format("Неверный путь к выходному файлу %s: \n     указана несуществующая папка или некорректное имя файла\n", "затирки");
 /*     */     } 
-/* 371 */     if (!checkOutPathCorrect(this.txtRev2FileName.getText())) {
+/* 371 */     if (checkOutPathIncorrect(this.txtRev2FileName.getText())) {
 /*     */       
 /* 373 */       result = false;
-/* 374 */       errMsg = String.valueOf(errMsg) + String.format("Неверный путь к выходному файлу %s: \n     указана несуществующая папка или некорректное имя файла\n", new Object[] { "учета" });
+/* 374 */       errMsg = errMsg + String.format("Неверный путь к выходному файлу %s: \n     указана несуществующая папка или некорректное имя файла\n", "учета");
 /*     */     } 
 /* 376 */     if (!result)
 /*     */     {
-/* 378 */       JOptionPane.showMessageDialog(this, errMsg, "Ошибка ввод данных", 0);
+/* 378 */       JOptionPane.showMessageDialog(this, errMsg, "Ошибка ввод данных", JOptionPane.ERROR_MESSAGE);
 /*     */     }
 /* 380 */     return result;
 /*     */   }
@@ -391,10 +369,10 @@
 /*     */ 
 /*     */ 
 /*     */   
-/*     */   private boolean checkOutPathCorrect(String fileName) {
+/*     */   private boolean checkOutPathIncorrect(String fileName) {
 /* 395 */     File file = new File(fileName);
 /* 396 */     File dir = file.getParentFile();
-/* 397 */     return (dir != null && dir.isDirectory() && fileName.endsWith(".gpx"));
+/* 397 */     return (dir == null || !dir.isDirectory() || !fileName.endsWith(".gpx"));
 /*     */   }
 /*     */ 
 /*     */ 
@@ -412,14 +390,14 @@
 /* 412 */       GPSTrack track = new GPSTrack(
 /* 413 */           GPSTrackBuilderFrame.this.txtSrcFileName.getText(), GPSTrackBuilderFrame.this.txtTrackName.getText(), GPSTrackBuilderFrame.this.txtDesc.getText());
 /*     */       
-/* 415 */       List<GPSTrackPoint> rev1Points = track.getTrackWithDeviation(
+/* 415 */       /* 419 */
+    List<GPSTrackPoint> rev1Points = track.getTrackWithDeviation(
 /* 416 */           GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev1DateFrom), 
 /* 417 */           GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev1DateTo), 
-/* 418 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev1Deviation.getText()), (
-/* 419 */           (Double)GPSTrackBuilderFrame.this.spinHeight.getValue()).doubleValue(), 
+/* 418 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev1Deviation.getText()), (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
 /* 420 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
 /*     */       
-/* 422 */       int middleCount = ((Integer)GPSTrackBuilderFrame.this.spinPointsPerSection.getValue()).intValue();
+/* 422 */       int middleCount = (Integer) GPSTrackBuilderFrame.this.spinPointsPerSection.getValue();
 /*     */       
 /* 424 */       List<GPSTrackPoint> extRev1Points = GPSTrack.getExtendedTrack(rev1Points, middleCount);
 /*     */ 
@@ -427,14 +405,16 @@
 /*     */ 
 /*     */ 
 /*     */       
-/* 430 */       List<GPSTrackPoint> rev2Points = GPSTrack.createTrackWithDeviation(rev1Points, 
+/* 430 */       /* 434 */
+    List<GPSTrackPoint> rev2Points = GPSTrack.createTrackWithDeviation(rev1Points,
 /* 431 */           GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev2DateFrom), 
 /* 432 */           GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev2DateTo), 
-/* 433 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev2Deviation.getText()), (
-/* 434 */           (Double)GPSTrackBuilderFrame.this.spinHeight.getValue()).doubleValue(), 
+/* 433 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev2Deviation.getText()), (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
 /* 435 */           Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
 /*     */       
-/* 437 */       List<GPSTrackPoint> extRev2Points = GPSTrack.getExtendedTrack(rev2Points, middleCount);
+/* 437 */
+    assert rev2Points != null;
+    List<GPSTrackPoint> extRev2Points = GPSTrack.getExtendedTrack(rev2Points, middleCount);
 /*     */ 
 /*     */ 
 /*     */ 
@@ -459,18 +439,18 @@
 /*     */         return;
 /*     */       }
 /* 461 */       JButton btn = (JButton)e.getSource();
-/* 462 */       String fileName = "";
+/* 462 */       String fileName;
 /*     */       
 /* 464 */       JFileChooser fc = new JFileChooser();
 /*     */       
 /* 466 */       fc.setCurrentDirectory(new File(GPSTrackBuilderFrame.this.getCurrentDir()));
 /*     */       
 /* 468 */       if (btn == GPSTrackBuilderFrame.this.btnChooseRev1File) {
-/* 469 */         fc.setSelectedFile(new File(String.valueOf(GPSTrackBuilderFrame.this.getCurrentDir()) + File.separator + GPSTrackBuilderFrame.this.txtRev1FileName.getText()));
+/* 469 */         fc.setSelectedFile(new File(GPSTrackBuilderFrame.this.getCurrentDir() + File.separator + GPSTrackBuilderFrame.this.txtRev1FileName.getText()));
 /* 470 */       } else if (btn == GPSTrackBuilderFrame.this.btnChooseRev2File) {
-/* 471 */         fc.setSelectedFile(new File(String.valueOf(GPSTrackBuilderFrame.this.getCurrentDir()) + File.separator + GPSTrackBuilderFrame.this.txtRev2FileName.getText()));
+/* 471 */         fc.setSelectedFile(new File(GPSTrackBuilderFrame.this.getCurrentDir() + File.separator + GPSTrackBuilderFrame.this.txtRev2FileName.getText()));
 /*     */       } 
-/* 473 */       fc.setFileFilter(new FileNameExtensionFilter("GPS eXchange", new String[] { "gpx" }));
+/* 473 */       fc.setFileFilter(new FileNameExtensionFilter("GPS eXchange", "gpx"));
 /* 474 */       fc.setAcceptAllFileFilterUsed(false);
 /*     */ 
 /*     */       
@@ -480,7 +460,7 @@
 /*     */         
 /* 481 */         fileName = fc.getSelectedFile().getAbsolutePath();
 /* 482 */         if (!fileName.endsWith(".gpx"))
-/* 483 */           fileName = String.valueOf(fileName) + ".gpx"; 
+/* 483 */           fileName = fileName + ".gpx";
 /* 484 */         if (btn == GPSTrackBuilderFrame.this.btnChooseSrcFile) {
 /* 485 */           GPSTrackBuilderFrame.this.txtSrcFileName.setText(fileName);
 /* 486 */         } else if (btn == GPSTrackBuilderFrame.this.btnChooseRev1File) {

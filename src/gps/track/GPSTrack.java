@@ -28,23 +28,16 @@
 /*     */ 
 /*     */ public class GPSTrack
 /*     */ {
-/*  31 */   private final String DATE_FORMAT = "yyyy-MM-dd'T'HH:mm:ss";
+    /*  31 */
+    /*     */
+/*     */   private final String trackName;
 /*     */   
-/*     */   private String trackName;
+/*     */   private final String desc;
 /*     */   
-/*     */   private String desc;
-/*     */   
-/*     */   private List<GPSTrackPoint> points;
+/*     */   private final List<GPSTrackPoint> points;
 /*     */   private static Random rand;
-/*     */   
-/*     */   public String getTrackName() {
-/*  41 */     return this.trackName;
-/*     */   }
-/*     */   
-/*     */   public String getDesc() {
-/*  45 */     return this.desc;
-/*     */   }
-/*     */   
+
+    /*     */
 /*     */   public List<GPSTrackPoint> getPoints() {
 /*  49 */     return this.points;
 /*     */   }
@@ -168,7 +161,7 @@
 /* 168 */       double changedLon = getRandomShiftedValue(p.getLongitude(), deltaCoord);
 /* 169 */       double changedHeight = getRandomShiftedValue(newHeight, deltaHeight);
 /*     */       
-/* 171 */       Date changedDate = null;
+/* 171 */       Date changedDate;
 /* 172 */       Calendar calendar = Calendar.getInstance();
 /* 173 */       if (i == 0) {
 /* 174 */         changedDate = fromDate;
@@ -179,7 +172,7 @@
 /* 179 */         changedDate = generateShiftedDate(fromDate, (int)(i * secondsBetweenPoints), deltaSec);
 /*     */       } 
 /* 181 */       calendar.setTime(changedDate);
-/* 182 */       calendar.add(10, -3);
+/* 182 */       calendar.add(Calendar.HOUR, -3);
 /* 183 */       changedDate = calendar.getTime();
 /*     */       
 /* 185 */       GPSTrackPoint newPoint = new GPSTrackPoint(changedLat, changedLon, 
@@ -210,7 +203,7 @@
 /* 210 */     int sign = (rand.nextDouble() < 0.5D) ? 1 : -1;
 /* 211 */     int shift = (deltaSec == 0) ? 0 : (rand.nextInt(deltaSec) * sign);
 /*     */     
-/* 213 */     calendar.add(13, offsetSec + shift);
+/* 213 */     calendar.add(Calendar.SECOND, offsetSec + shift);
 /* 214 */     return calendar.getTime();
 /*     */   }
 /*     */ 
@@ -253,7 +246,7 @@
 /* 253 */     doc.appendChild(gpxElement);
 /*     */ 
 /*     */     
-/* 256 */     Date metaDate = ((GPSTrackPoint)points.get(points.size() - 1)).getDate();
+/* 256 */     Date metaDate = points.get(points.size() - 1).getDate();
 /* 257 */     Element metaElement = createGarminMetaData(doc, metaDate);
 /* 258 */     gpxElement.appendChild(metaElement);
 /*     */     
@@ -469,17 +462,17 @@
 /* 469 */     int idx2 = (points1.size() - 1) / 2;
 /* 470 */     int idx3 = points1.size() - 1;
 /*     */     
-/* 472 */     GPSTrackPoint p0 = ((GPSTrackPoint)points1.get(idx0)).clone();
-/* 473 */     GPSTrackPoint p1 = ((GPSTrackPoint)points1.get(idx1)).clone();
-/* 474 */     GPSTrackPoint p2 = ((GPSTrackPoint)points1.get(idx2)).clone();
-/* 475 */     GPSTrackPoint p3 = ((GPSTrackPoint)points1.get(idx3)).clone();
+/* 472 */     GPSTrackPoint p0 = points1.get(idx0).clone();
+/* 473 */     GPSTrackPoint p1 = points1.get(idx1).clone();
+/* 474 */     GPSTrackPoint p2 = points1.get(idx2).clone();
+/* 475 */     GPSTrackPoint p3 = points1.get(idx3).clone();
 /*     */ 
 /*     */     
 /* 478 */     for (int i = 0; i < points1.size(); i++) {
 /*     */       
 /* 480 */       GPSTrackPoint p = points1.get(i);
 /*     */       
-/* 482 */       double t = (p.getTime() - p0.getTime()) / (
+/* 482 */       double t = (float)(p.getTime() - p0.getTime()) / (
 /* 483 */         p3.getTime() - p0.getTime());
 /*     */       
 /* 485 */       double h = Math.pow(1.0D - t, 3.0D) * p0.getHeight() + 
@@ -490,7 +483,7 @@
 /*     */       
 /* 491 */       p.setHeight(h);
 /*     */       
-/* 493 */       ((GPSTrackPoint)points2.get(i)).setHeight(h);
+/* 493 */       points2.get(i).setHeight(h);
 /*     */     } 
 /*     */   }
 /*     */ 
