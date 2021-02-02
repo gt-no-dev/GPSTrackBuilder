@@ -26,10 +26,6 @@ public class GPSTrackBuilderFrame
 
     private JTextField txtTrackName;
 
-    private JSpinner spinHeight;
-
-    private JTextField txtHeightDeviation;
-
     private JSpinner spinPointsPerSection;
 
     private JTextField txtDesc;
@@ -68,8 +64,6 @@ public class GPSTrackBuilderFrame
         this.btnChooseSrcFile = new JButton();
         this.txtTrackName = new JTextField("Трек");
         this.txtDesc = new JTextField("Описание");
-        this.spinHeight = new JSpinner(new SpinnerNumberModel(250.0D, -500.0D, 500.0D, 0.1D));
-        this.txtHeightDeviation = new JTextField("1.0");
         this.spinPointsPerSection = new JSpinner(new SpinnerNumberModel(10, 1, 100, 1));
 
         gbc.fill = 2;
@@ -78,16 +72,12 @@ public class GPSTrackBuilderFrame
         gbc.weightx = 0.1D;
         pnlSourceData.add(new JLabel("Имя исходного файла (.gpx)"), gbc);
         pnlSourceData.add(new JLabel("Наименование трека"), gbc);
-        pnlSourceData.add(new JLabel("Высота над уровнем моря"), gbc);
-        pnlSourceData.add(new JLabel("Отклонение высоты"), gbc);
         pnlSourceData.add(new JLabel("Число промежуточных точек"), gbc);
         pnlSourceData.add(new JLabel("Описание трека"), gbc);
         gbc.gridx = 1;
         gbc.weightx = 2.0D;
         pnlSourceData.add(makeChooseFileBox(this.txtSrcFileName, this.btnChooseSrcFile), gbc);
         pnlSourceData.add(this.txtTrackName, gbc);
-        pnlSourceData.add(this.spinHeight, gbc);
-        pnlSourceData.add(this.txtHeightDeviation, gbc);
         pnlSourceData.add(this.spinPointsPerSection, gbc);
         pnlSourceData.add(this.txtDesc, gbc);
         return pnlSourceData;
@@ -341,9 +331,7 @@ public class GPSTrackBuilderFrame
                     GPSTrackBuilderFrame.this.txtSrcFileName.getText(),
                     GPSTrackBuilderFrame.this.txtTrackName.getText(),
                     GPSTrackBuilderFrame.this.txtDesc.getText(),
-                    (Integer) GPSTrackBuilderFrame.this.spinPointsPerSection.getValue(),
-                    (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
-                    Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
+                    (Integer) GPSTrackBuilderFrame.this.spinPointsPerSection.getValue());
 
             BuilderOutArgs outArgs1 = new BuilderOutArgs(
                     GPSTrackBuilderFrame.this.txtRev1FileName.getText(),

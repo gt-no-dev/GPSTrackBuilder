@@ -109,12 +109,12 @@ public class GPSTrack {
     }
 
 
-    public List<GPSTrackPoint> getTrackWithDeviation(Date fromDate, Date toDate, double deltaCoord, double newHeight, double deltaHeight) {
-        return createTrackWithDeviation(getPoints(), fromDate, toDate, deltaCoord, newHeight, deltaHeight);
+    public List<GPSTrackPoint> getTrackWithDeviation(Date fromDate, Date toDate, double deltaCoord) {
+        return createTrackWithDeviation(getPoints(), fromDate, toDate, deltaCoord);
     }
 
 
-    public static List<GPSTrackPoint> createTrackWithDeviation(List<GPSTrackPoint> srcPoints, Date fromDate, Date toDate, double deltaCoord, double newHeight, double deltaHeight) {
+    public static List<GPSTrackPoint> createTrackWithDeviation(List<GPSTrackPoint> srcPoints, Date fromDate, Date toDate, double deltaCoord) {
         if (srcPoints.size() < 2) {
             return null;
         }
@@ -131,7 +131,6 @@ public class GPSTrack {
 
             double changedLat = getRandomShiftedValue(p.getLatitude(), deltaCoord);
             double changedLon = getRandomShiftedValue(p.getLongitude(), deltaCoord);
-            double changedHeight = getRandomShiftedValue(newHeight, deltaHeight);
 
             Date changedDate;
             Calendar calendar = Calendar.getInstance();
@@ -140,7 +139,6 @@ public class GPSTrack {
             } else if (i == srcPoints.size() - 1) {
                 changedDate = toDate;
             } else {
-
                 changedDate = generateShiftedDate(fromDate, (int) (i * secondsBetweenPoints), deltaSec);
             }
             calendar.setTime(changedDate);
@@ -148,7 +146,7 @@ public class GPSTrack {
             changedDate = calendar.getTime();
 
             GPSTrackPoint newPoint = new GPSTrackPoint(changedLat, changedLon,
-                    changedHeight, changedDate);
+                    p.getHeight(), changedDate);
 
             resPoints.add(newPoint);
         }
@@ -337,36 +335,6 @@ public class GPSTrack {
             result.add(p);
         }
         return result;
-    }
-
-    public static void interpolateHeigts(List<GPSTrackPoint> points1, List<GPSTrackPoint> points2) {
-        int idx0 = 0;
-        int idx1 = (points1.size() - 1) / 5;
-        int idx2 = (points1.size() - 1) / 2;
-        int idx3 = points1.size() - 1;
-
-        GPSTrackPoint p0 = points1.get(idx0).clone();
-        GPSTrackPoint p1 = points1.get(idx1).clone();
-        GPSTrackPoint p2 = points1.get(idx2).clone();
-        GPSTrackPoint p3 = points1.get(idx3).clone();
-
-
-        for (int i = 0; i < points1.size(); i++) {
-
-            GPSTrackPoint p = points1.get(i);
-
-            double t = (float) (p.getTime() - p0.getTime()) / (
-                    p3.getTime() - p0.getTime());
-
-            double h = Math.pow(1.0D - t, 3.0D) * p0.getHeight() +
-                    3.0D * Math.pow(1.0D - t, 2.0D) * t * p1.getHeight() +
-                    3.0D * (1.0D - t) * Math.pow(t, 2.0D) * p2.getHeight() +
-                    Math.pow(t, 3.0D) * p3.getHeight();
-
-            p.setHeight(h);
-
-            points2.get(i).setHeight(h);
-        }
     }
 
     public static Date convertStringToDate(String timeString, String pattern) throws ParseException {

@@ -11,17 +11,11 @@ public class BuilderArgs {
     private final String description;
     @Getter
     private final Integer pointsPerSection;
-    @Getter
-    private final Double height;
-    @Getter
-    private final Double heightDeviation;
 
-    public BuilderArgs(String sourceFileName, String trackName, String description, Integer pointsPerSection, Double height, Double heightDeviation) {
+    public BuilderArgs(String sourceFileName, String trackName, String description, Integer pointsPerSection) {
         this.sourceFileName = sourceFileName;
         this.trackName = trackName;
         this.description = description;
         this.pointsPerSection = pointsPerSection;
-        this.height = height;
-        this.heightDeviation = heightDeviation;
     }
 }

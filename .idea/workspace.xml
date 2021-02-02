@@ -5,23 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="fad9e65b-c71e-4ced-a28a-2bc060dc71e8" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/jarRepositories.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/.idea/uiDesigner.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gps/track/BuilderArgs.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/gps/track/BuilderOutArgs.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/vcs.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/GPSTrackBuilder.iml" beforeDir="false" afterPath="$PROJECT_DIR$/GPSTrackBuilder.iml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gps/gui/GPSTrackBuilderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/gui/GPSTrackBuilderFrame.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gps/track/Builder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/Builder.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gps/track/GPSTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrack.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/gps/track/GPSTrackPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrackPoint.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/images/folder.png" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gps/gui/GPSTrackBuilderFrame.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/gui/GPSTrackBuilderFrame.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gps/track/Builder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/Builder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gps/track/BuilderArgs.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/BuilderArgs.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrack.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrack.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrackPoint.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/gps/track/GPSTrackPoint.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
