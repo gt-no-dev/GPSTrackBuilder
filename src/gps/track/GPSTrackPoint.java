@@ -1,66 +1,48 @@
-/*    */ package gps.track;
-/*    */ 
-/*    */ import java.util.Date;
-/*    */ 
-/*    */ public class GPSTrackPoint
-/*    */ {
-/*    */   private double latitude;
-/*    */   private double longitude;
-/*    */   private double height;
-/*    */   private Date date;
-/*    */   
-/*    */   public double getLatitude() {
-/* 13 */     return this.latitude;
-/*    */   }
+package gps.track;
 
-    /*    */
-/*    */   public double getLongitude() {
-/* 21 */     return this.longitude;
-/*    */   }
-/*    */   
-/*    */   public void setLongitude(double longitude) {
-/* 25 */     this.longitude = longitude;
-/*    */   }
-/*    */   
-/*    */   public double getHeight() {
-/* 29 */     return this.height;
-/*    */   }
-/*    */   
-/*    */   public void setHeight(double height) {
-/* 33 */     this.height = height;
-/*    */   }
-/*    */   
-/*    */   public Date getDate() {
-/* 37 */     return this.date;
-/*    */   }
-/*    */   
-/*    */   public void setDate(Date date) {
-/* 41 */     this.date = date;
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public long getTime() {
-/* 46 */     return this.date.getTime();
-/*    */   }
-/*    */ 
-/*    */   
-/*    */   public GPSTrackPoint clone() {
-/* 51 */     return new GPSTrackPoint(this.latitude, this.longitude, this.height, this.date);
-/*    */   }
-/*    */ 
-/*    */ 
-/*    */ 
-/*    */   
-/*    */   public GPSTrackPoint(double latitude, double longitude, double height, Date date) {
-/* 58 */     this.latitude = latitude;
-/* 59 */     this.longitude = longitude;
-/* 60 */     this.height = height;
-/* 61 */     this.date = date;
-/*    */   }
-/*    */ }
+import java.util.Date;
+
+public class GPSTrackPoint {
+    private final double latitude;
+    private final double longitude;
+    private double height;
+    private final Date date;
+
+    public double getLatitude() {
+        return this.latitude;
+    }
+
+    public double getLongitude() {
+        return this.longitude;
+    }
+
+    public double getHeight() {
+        return this.height;
+    }
+
+    public void setHeight(double height) {
+        this.height = height;
+    }
+
+    public Date getDate() {
+        return this.date;
+    }
 
 
-/* Location:              C:\dev\TZ\GPSTrackBuilder.jar!\gps\track\GPSTrackPoint.class
- * Java compiler version: 8 (52.0)
- * JD-Core Version:       1.1.3
- */
+    public long getTime() {
+        return this.date.getTime();
+    }
+
+
+    public GPSTrackPoint clone() {
+        return new GPSTrackPoint(this.latitude, this.longitude, this.height, this.date);
+    }
+
+
+    public GPSTrackPoint(double latitude, double longitude, double height, Date date) {
+        this.latitude = latitude;
+        this.longitude = longitude;
+        this.height = height;
+        this.date = date;
+    }
+}
