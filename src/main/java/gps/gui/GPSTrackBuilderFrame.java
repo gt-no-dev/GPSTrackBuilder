@@ -1,10 +1,10 @@
 package gps.gui;
 
 
-import gps.track.GPSTrack;
-import gps.track.GPSTrackPoint;
+import gps.track.Builder;
+import gps.track.BuilderArgs;
+import gps.track.BuilderOutArgs;
 
-import javax.imageio.ImageIO;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -12,11 +12,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.io.IOException;
 import java.util.Calendar;
 import java.util.Date;
-import java.util.List;
-
 
 public class GPSTrackBuilderFrame
         extends JFrame {
@@ -61,7 +58,6 @@ public class GPSTrackBuilderFrame
 
         localizeFileChooserToRussian();
     }
-
 
     private JPanel createSourceDataPanel() {
         JPanel pnlSourceData = new JPanel(new GridBagLayout());
@@ -221,13 +217,7 @@ public class GPSTrackBuilderFrame
         Box box = Box.createHorizontalBox();
         box.add(textField);
         box.add(button);
-        try {
-            Image img = ImageIO.read(getClass().getResource("/images/folder.png"));
-            button.setIcon(new ImageIcon(img));
-        } catch (IOException e) {
-
-            e.printStackTrace();
-        }
+        button.setText("Выбрать");
         button.addActionListener(new ChooseFileButtonListener());
         return box;
     }
@@ -262,7 +252,6 @@ public class GPSTrackBuilderFrame
             e.printStackTrace();
         }
     }
-
 
     private void localizeFileChooserToRussian() {
         UIManager.put("FileChooser.fileNameLabelText", "Имя файла:");
@@ -348,37 +337,27 @@ public class GPSTrackBuilderFrame
                 return;
             }
 
-            GPSTrack track = new GPSTrack(
-                    GPSTrackBuilderFrame.this.txtSrcFileName.getText(), GPSTrackBuilderFrame.this.txtTrackName.getText(), GPSTrackBuilderFrame.this.txtDesc.getText());
+            BuilderArgs args = new BuilderArgs(
+                    GPSTrackBuilderFrame.this.txtSrcFileName.getText(),
+                    GPSTrackBuilderFrame.this.txtTrackName.getText(),
+                    GPSTrackBuilderFrame.this.txtDesc.getText(),
+                    (Integer) GPSTrackBuilderFrame.this.spinPointsPerSection.getValue(),
+                    (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
+                    Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
 
-
-            List<GPSTrackPoint> rev1Points = track.getTrackWithDeviation(
+            BuilderOutArgs outArgs1 = new BuilderOutArgs(
+                    GPSTrackBuilderFrame.this.txtRev1FileName.getText(),
                     GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev1DateFrom),
                     GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev1DateTo),
-                    Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev1Deviation.getText()), (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
-                    Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
+                    Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev1Deviation.getText()));
 
-            int middleCount = (Integer) GPSTrackBuilderFrame.this.spinPointsPerSection.getValue();
-
-            List<GPSTrackPoint> extRev1Points = GPSTrack.getExtendedTrack(rev1Points, middleCount);
-
-
-            List<GPSTrackPoint> rev2Points = GPSTrack.createTrackWithDeviation(rev1Points,
+            BuilderOutArgs outArgs2 = new BuilderOutArgs(
+                    GPSTrackBuilderFrame.this.txtRev2FileName.getText(),
                     GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev2DateFrom),
                     GPSTrackBuilderFrame.this.getDateFromControl(GPSTrackBuilderFrame.this.spinRev2DateTo),
-                    Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev2Deviation.getText()), (Double) GPSTrackBuilderFrame.this.spinHeight.getValue(),
-                    Double.parseDouble(GPSTrackBuilderFrame.this.txtHeightDeviation.getText()));
+                    Double.parseDouble(GPSTrackBuilderFrame.this.txtMaxRev2Deviation.getText()));
 
-
-            assert rev2Points != null;
-            List<GPSTrackPoint> extRev2Points = GPSTrack.getExtendedTrack(rev2Points, middleCount);
-
-
-            GPSTrack.interpolateHeigts(extRev1Points, extRev2Points);
-
-            track.writeGpxFile(GPSTrackBuilderFrame.this.txtRev1FileName.getText(), extRev1Points);
-
-            track.writeGpxFile(GPSTrackBuilderFrame.this.txtRev2FileName.getText(), extRev2Points);
+            Builder.Perform(args, outArgs1, outArgs2);
         }
     }
 
