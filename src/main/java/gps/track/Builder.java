@@ -1,28 +1,23 @@
 package gps.track;
 
 import java.util.List;
-import java.util.Objects;
 
 public class Builder {
-    public static void Perform(BuilderArgs args, BuilderOutArgs outArgs1, BuilderOutArgs outArgs2) {
-        GPSTrack track = new GPSTrack(
-                args.getSourceFileName(), args.getTrackName(), args.getDescription());
+    public static void Perform(BuilderArgs args) {
+        // Загружаем трек
+        GPSTrack track = new GPSTrack(args.getInputFileName(), args.getTrackName(), args.getTrackDescription());
 
-        List<GPSTrackPoint> rev1Points = track.getTrackWithDeviation(
-                outArgs1.getDateFrom(),
-                outArgs1.getDateTo(),
-                outArgs1.getMaxDeviation());
+        // Создаем новый набор точек
+        List<GPSTrackPoint> points = track.getTrackWithDeviation(
+                args.getDateFrom(),
+                args.getDateTo(),
+                args.getMaxDeviation());
 
-        List<GPSTrackPoint> rev2Points = GPSTrack.createTrackWithDeviation(rev1Points,
-                outArgs2.getDateFrom(),
-                outArgs2.getDateTo(),
-                outArgs2.getMaxDeviation());
+        // Изменим количество точек
+        points = GPSTrack.resizePoints(points, args.getNewPointsCount());
 
-        List<GPSTrackPoint> extRev1Points = GPSTrack.getExtendedTrack(rev1Points, args.getPointsPerSection());
-        List<GPSTrackPoint> extRev2Points = GPSTrack.getExtendedTrack(Objects.requireNonNull(rev2Points), args.getPointsPerSection());
-
-        track.writeGpxFile(outArgs1.getFileName(), extRev1Points);
-        track.writeGpxFile(outArgs2.getFileName(), extRev2Points);
+        // Запишем файл
+        track.writeGpxFile(args.getOutputFileName(), points);
     }
 }
 

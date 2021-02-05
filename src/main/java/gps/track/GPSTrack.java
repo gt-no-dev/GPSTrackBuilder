@@ -346,4 +346,24 @@ public class GPSTrack {
         SimpleDateFormat format = new SimpleDateFormat(pattern);
         return format.format(date);
     }
+
+    public static List<GPSTrackPoint> resizePoints(List<GPSTrackPoint> points, int newSize){
+        // Получим коэффициенты преобразования количества точек
+        int pointsSize = points.size();
+        int gcb = MathUtils.gcdBySteinsAlgorithm(pointsSize, newSize);
+        int pointsCoef = pointsSize / gcb;
+        int newSizeCoef = newSize / gcb;
+
+        // Получим расширенный набор точек
+        List<GPSTrackPoint> extPoints = GPSTrack.getExtendedTrack(points, newSizeCoef - 1);
+
+        // Удалим "лишние" точки
+        for (int i = extPoints.size() - 2; i >= 0; i--) {
+            if (i % pointsCoef != 0){
+                extPoints.remove(i);
+            }
+        }
+
+        return extPoints;
+    }
 }
