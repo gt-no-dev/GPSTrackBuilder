@@ -4,7 +4,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 <?import tornadofx.control.DateTimePicker?>
-<BorderPane xmlns="http://javafx.com/javafx/15.0.1" xmlns:fx="http://javafx.com/fxml/1"
+<BorderPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
             fx:controller="gps.gui.GPSTrackBuilderController" stylesheets="GPSTrackBuilder.css">
     <center>
         <GridPane prefHeight="202.0" prefWidth="542.0">

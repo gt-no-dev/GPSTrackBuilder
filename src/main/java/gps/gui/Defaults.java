@@ -9,7 +9,7 @@ import java.util.Date;
 public class Defaults {
     private static final SimpleDateFormat trackNameDateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 
-    public static final String Title = "Преобразователь GPS-трека";
+    public static final String Title = String.format("Преобразователь GPS-трека %s", MavenUtils.getVersion());
     public static final Integer Width = 700;
     public static final Integer Height = 400;
 
